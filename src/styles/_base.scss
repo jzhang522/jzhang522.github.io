@@ -1,0 +1,158 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Base
+    - Mixins
+    - SASS Variables
+    - Typography
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Base
+--------------------------------------------------------------*/
+
+/* SASS Variables
+--------------------------------------------- */
+// Background colors
+$color-background-primary: rgb(255, 255, 255);
+$color-background-navbar: rgb(243, 244, 246);
+$color-background-card: rgb(240, 240, 240);
+$color-background-surface: rgb(238, 242, 247);
+$color-background-header: rgb(0, 30, 90);
+$color-background-ticker: rgb(11, 19, 32);
+
+// Text colors
+$color-text-primary: rgb(11, 19, 32);
+$color-text-inverse: rgb(255, 255, 255);
+$color-text-muted: rgb(91, 100, 114);
+$color-text-subtle: rgb(156, 163, 175);
+$color-text-ticker: rgb(255, 255, 255);
+
+// Brand colors
+$color-brand-primary: rgb(0, 61, 153);
+$color-brand-primary-hover: rgb(0, 82, 204);
+$color-brand-accent: rgb(252, 183, 0);
+$color-brand-accent-hover: rgb(255, 198, 26);
+
+// Market status colors
+$color-market-up: rgb(23, 130, 62);
+$color-market-down: rgb(220, 38, 38);
+$color-market-neutral: rgb(107, 114, 128);
+$color-ticker-up: rgb(23, 130, 62);
+$color-ticker-up-hover: rgb(8, 92, 39);
+$color-ticker-down: rgb(239, 68, 68);
+$color-ticker-down-hover: rgb(185, 28, 28);
+
+// Border & divider colors
+$color-border-primary: rgb(229, 231, 235);
+$color-divider: rgb(209, 213, 219);
+
+// Overlay colors
+$color-overlay-dark: rgba(0, 0, 0, 0.55);
+$color-overlay-light: rgba(255, 255, 255, 0.75);
+
+// Focus / accessibility
+$color-focus: rgb(37, 99, 235);
+
+// Footer colors
+$color-footer-background: rgb(0, 30, 90);
+
+// Fonts
+$font-body: 'Inter', system-ui, sans-serif;
+$font-heading: 'Playfair Display', serif;
+
+// Font sizing
+$fs-xs: 0.75rem;
+$fs-sm: 0.875rem;
+$fs-md: 1rem;
+$fs-lg: 1.25rem;
+$fs-xl: 1.75rem;
+$fs-xxl: 2.5rem;
+
+// Font weight
+$fw-normal: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+
+// Layout
+$site-margin: 6rem;
+
+// Effects
+$radius: 16px;
+$radius-sm: 6px;
+$transition: 0.3s ease;
+
+// Header
+$header-height: 90px;
+$header-height-mobile: 50px;
+$scroll-margin-top: $header-height + 16px;
+$scroll-margin-top-mobile: $header-height-mobile + 16px;
+
+
+/* Mixins
+--------------------------------------------- */
+@mixin anchor-scroll-margin {
+    scroll-margin-top: $scroll-margin-top;
+
+    @media (max-width: 1080px) {
+        scroll-margin-top: $scroll-margin-top-mobile;
+    }
+}
+
+/* Typography
+--------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: $font-body;
+    font-size: $fs-md;
+    margin: 0;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    cursor: pointer;
+    filter: brightness(0) invert(1);
+    color: $color-text-primary;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: $font-heading;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: $fs-xxl;
+}
+
+h2 {
+    font-size: $fs-xl;
+}
+
+h3 {
+    font-size: $fs-lg;
+}
+
+a {
+    text-decoration: none;  
+    &:visited {
+        color: inherit;
+        text-decoration: none;
+    }
+}
+
+p {
+    color: $color-text-primary;
+}

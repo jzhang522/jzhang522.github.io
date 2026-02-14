@@ -1,0 +1,263 @@
+/*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+
+@use "base" as *;
+@use "sass:color";
+
+// Placeholders
+%contact-card-icon-base {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $color-border-primary;
+    transition: background-color $transition;
+}
+
+// Mixin: card variant (focus ring, icon, value + hover states)
+@mixin contact-card-variant(
+    $focus-color,
+    $icon-bg,
+    $icon-bg-hover,
+    $icon-color,
+    $value-color,
+    $value-color-hover
+) {
+    &:focus-visible {
+        box-shadow: 0 0 0 2px $focus-color;
+    }
+    .contact-card-icon {
+        @extend %contact-card-icon-base;
+        background-color: $icon-bg;
+        color: $icon-color;
+    }
+    &:hover .contact-card-icon {
+        background-color: $icon-bg-hover;
+    }
+    .contact-card-value {
+        margin-top: 0.5rem;
+        font-weight: $fw-medium;
+        color: $value-color;
+    }
+    &:hover .contact-card-value {
+        color: $value-color-hover;
+    }
+}
+
+/*--------------------------------------------------------------
+# Section & layout
+--------------------------------------------------------------*/
+
+#contact {
+    @include anchor-scroll-margin;
+}
+
+.contact-intro {
+    margin-top: 1rem;
+    font-size: $fs-lg;
+    color: $color-text-muted;
+}
+
+.contact-grid {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+/*--------------------------------------------------------------
+# Contact cards
+--------------------------------------------------------------*/
+
+.contact-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex: 1 1 100%;
+    min-width: 0;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba($color-border-primary, 0.8);
+    background-color: $color-background-primary;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    transition: transform $transition, box-shadow $transition;
+    overflow: hidden;   
+
+    @media (min-width: 640px) {
+        flex: 1 1 calc(50% - 0.75rem);
+    }
+
+    @media (min-width: 1024px) {
+        flex: 1 1 calc(33.333% - 1rem);
+    }
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        cursor: pointer;
+    }
+
+    // Modifiers: focus + icon + value (via mixin)
+    &-email {
+        @include contact-card-variant(
+            $color-brand-accent,
+            rgba($color-brand-accent, 0.15),
+            rgba($color-brand-accent, 0.25),
+            color.scale($color-brand-accent, $lightness: -15%),
+            color.scale($color-brand-accent, $lightness: -20%),
+            color.scale($color-brand-accent, $lightness: -25%)
+        );
+    }
+
+    &-linkedin {
+        @include contact-card-variant(
+            $color-brand-primary,
+            rgba($color-brand-primary, 0.1),
+            rgba($color-brand-primary, 0.2),
+            $color-brand-primary,
+            $color-brand-primary,
+            $color-brand-primary-hover
+        );
+    }
+
+    &-github {
+        @include contact-card-variant(
+            $color-text-muted,
+            $color-background-navbar,
+            $color-border-primary,
+            $color-text-muted,
+            $color-text-muted,
+            $color-text-primary
+        );
+        @media (min-width: 640px) {
+            flex: 1 1 100%;
+        }
+        @media (min-width: 1024px) {
+            flex: 1 1 calc(33.333% - 1rem);
+        }
+    }
+
+    &-resume {
+        @include contact-card-variant(
+            $color-brand-primary,
+            rgba($color-brand-primary, 0.08),
+            rgba($color-brand-primary, 0.15),
+            $color-brand-primary,
+            $color-brand-primary,
+            $color-brand-primary-hover
+        );
+    }
+
+    &-location {
+        @include contact-card-variant(
+            $color-text-muted,
+            $color-background-navbar,
+            $color-border-primary,
+            $color-text-muted,
+            $color-text-muted,
+            $color-text-primary
+        );
+    }
+
+    // Shared card inner elements
+    &-icon {
+        @extend %contact-card-icon-base;
+    }
+
+    &-content {
+        min-width: 0;
+        flex: 1;
+    }
+
+    &-title {
+        font-weight: $fw-semibold;
+        color: $color-text-primary;
+    }
+
+    &-desc {
+        margin-top: 0.25rem;
+        font-size: $fs-sm;
+        color: $color-text-subtle;
+    }
+
+    &-value {
+        margin-top: 0.5rem;
+        font-weight: $fw-medium;
+    }
+}
+
+/*--------------------------------------------------------------
+# Message box & form
+--------------------------------------------------------------*/
+
+.contact-message-box {
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    border: 1px solid rgba($color-border-primary, 0.8);
+    background: $color-background-primary;
+}
+
+.contact-message-title {
+    font-size: $fs-lg;
+    font-weight: $fw-semibold;
+    color: $color-text-primary;
+}
+
+.contact-message-desc {
+    margin-top: 0.25rem;
+    font-size: $fs-sm;
+    color: $color-text-subtle;
+}
+
+.contact-form {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.contact-form-field {
+    min-width: 0;
+    flex: 1;
+}
+
+.contact-form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid $color-border-primary;
+    background-color: $color-background-primary;
+    color: $color-text-primary;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    transition: border-color $transition, box-shadow $transition;
+
+    &:hover {
+        border-color: $color-brand-accent;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $color-brand-accent;
+        box-shadow: 0 0 0 3px rgba($color-brand-accent, 0.2);
+    }
+}
+
+.contact-form-btn {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: $color-brand-accent;
+    color: $color-text-primary;
+    font-weight: $fw-semibold;
+    border: none;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    cursor: pointer;
+    transition: background-color $transition, box-shadow $transition;
+
+    &:hover {
+        background-color: $color-brand-accent-hover;
+    }
+}

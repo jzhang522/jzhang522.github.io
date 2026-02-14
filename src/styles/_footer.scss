@@ -1,0 +1,81 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Imports
+# Footer
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Imports
+--------------------------------------------------------------*/
+
+@use "base" as *;
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+@use "base" as *;
+
+.site-footer {
+    background-color: $color-footer-background;
+    color: $color-text-inverse;
+
+    a {
+        color: $color-text-inverse;
+        text-decoration: none;
+
+        &:hover {
+            color: $color-brand-accent;
+        }
+    }
+
+    .footer-icon-link {
+        svg {
+            fill: currentColor;
+        }
+
+        &:hover svg {
+            fill: $color-brand-accent;
+        }
+    }
+
+    .footer-cta-section {
+        color: $color-text-inverse;
+
+        p {
+            color: rgba($color-text-inverse, 0.9);
+        }
+    }
+
+    .footer-btn {
+        border: 2px solid $color-text-inverse;
+        color: $color-text-inverse;
+        transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+
+        &:hover {
+            background-color: $color-brand-accent;
+            border-color: $color-brand-accent;
+            color: rgb(0, 0, 0);
+        }
+    }
+
+    .footer-copy {
+        color: $color-text-subtle;
+    }
+
+    .footer-head {
+        border-bottom: 3px solid $color-text-subtle;
+    }
+}
+
+#footer-container {
+    padding-left: $site-margin;
+    padding-right: $site-margin;
+
+    @media (max-width: 768px) {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+

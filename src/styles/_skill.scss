@@ -1,0 +1,208 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Imports
+# Variables
+# Mixins
+# Skill Table
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Imports
+--------------------------------------------------------------*/
+
+@use "base" as *;
+@use "sass:meta";
+@use "sass:color" as color;
+@use "sass:list" as list;
+
+/*--------------------------------------------------------------
+# Variables
+--------------------------------------------------------------*/
+
+$skill-text-dark: #1a1a1a;
+$skill-table-darken: 10%;
+$skill-variants: (
+    "csharp": #68217a,
+    "java": #ed8b00,
+    "python": #3776ab,
+    "javascript": (
+        #f7df1e,
+        $skill-text-dark,
+    ),
+    "sql": #e38c00,
+    "cpp": #00599c,
+    "c": (
+        #a8b9cc,
+        $skill-text-dark,
+    ),
+    "php": #777bb4,
+    "html5": #e34f26,
+    "css3": #1572b6,
+    "javascript-es6": (
+        #f7df1e,
+        $skill-text-dark,
+    ),
+    "react": (
+        #61dafb,
+        $skill-text-dark,
+    ),
+    "angular": #dd0031,
+    "vue": #4fc08d,
+    "bootstrap": #7952b3,
+    "aspnet": #512bd4,
+    "spring": #6db33f,
+    "rest": #00a0e3,
+    "aws": (
+        #ff9900,
+        $skill-text-dark,
+    ),
+    "azure": #0078d4,
+    "sqlserver": #cc2927,
+    "mysql": #4479a1,
+    "visual-studio": #5c2d91,
+    "git": #f05032,
+    "jenkins": #d24939,
+    "docker": #2496ed,
+    "selenium": #43b02a,
+    "agile": #0052cc,
+    "git-workflows": #f05032,
+    "cicd": #239120,
+    "unit-testing": #8bc34a,
+    "typescript": #3178c6,
+    "canvas": #1a1a1a,
+);
+
+/*--------------------------------------------------------------
+# Project skill tags
+--------------------------------------------------------------*/
+
+@each $skill-id, $skill-value in $skill-variants {
+    // Declare variables first
+    $bg: null;
+    $fg: null;
+
+    // Set values using modern @if/@else
+    @if meta.type-of($skill-value) == "list" {
+        $bg: list.nth($skill-value, 1);
+        $fg: list.nth($skill-value, 2);
+    } @else {
+        $bg: $skill-value;
+        $fg: $color-text-inverse;
+    }
+
+    .skill-tag--#{$skill-id} {
+        background-color: $bg;
+        color: $fg;
+    }
+}
+
+/*--------------------------------------------------------------
+# Skill Table
+--------------------------------------------------------------*/
+
+#skills {
+    @include anchor-scroll-margin;
+}
+
+.skill-category-card {
+    border-top: 6px solid $color-brand-primary;
+}
+
+.skill-section-subtitle {
+    font-size: $fs-xl;
+    font-weight: $fw-bold;
+    color: $color-background-header;
+    margin: 1rem 0;
+
+    .skill-detail & {
+        margin: 0.75rem 1rem;
+        font-size: $fs-lg;
+    }
+}
+
+.skill-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $fs-xs;
+    font-weight: $fw-bold;
+    min-width: 0;
+
+    th {
+        border-bottom: 3px dotted $color-divider;
+        padding: 0.75rem;
+        font-size: $fs-sm;
+        color: $color-text-muted;
+
+        &:first-child {
+            text-align: left;
+        }
+
+        &:not(:first-child) {
+            text-align: right;
+        }
+    }
+
+    td {
+        padding: 0.75rem;
+
+        &:first-child {
+            text-align: left;
+        }
+
+        &:not(:first-child) {
+            text-align: right;
+        }
+    }
+
+    tbody tr {
+        transition:
+            transform $transition,
+            box-shadow $transition,
+            background-color $transition;
+
+        &:nth-child(even) {
+            background-color: $color-background-surface;
+        }
+
+        &:nth-child(odd) {
+            background-color: $color-background-primary;
+        }
+
+        &:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+        }
+    }
+}
+
+.skill-detail {
+    .skill-category-block {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 12rem;
+    }
+
+    .skill-table {
+        @each $skill-id, $skill-value in $skill-variants {
+            // Declare variable first
+            $skill-color: null;
+
+            // Modern conditional
+            @if meta.type-of($skill-value) == "list" {
+                $skill-color: color.scale(
+                    list.nth($skill-value, 1),
+                    $lightness: -$skill-table-darken
+                );
+            } @else {
+                $skill-color: $skill-value;
+            }
+
+            td[data-skill="#{$skill-id}"] {
+                color: $skill-color;
+            }
+        }
+    }
+}

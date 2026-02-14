@@ -1,0 +1,58 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Layout
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Imports
+# Layout
+    - Site Section Separator
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Imports
+--------------------------------------------------------------*/
+
+@use "base" as *;
+
+/*--------------------------------------------------------------
+# Layout
+--------------------------------------------------------------*/
+
+/* Site Section Container
+--------------------------------------------------------------*/
+.site-section-container {
+    margin: 3rem $site-margin;
+}
+
+@media (max-width: 768px) {
+    .site-section-container {
+        margin: 2rem 1rem;
+    }
+}
+
+/* Site Section Separator
+--------------------------------------------------------------*/
+.site-section-title {
+    font-size: $fs-xxl;
+    font-weight: $fw-bold;
+    color: $color-background-header;
+    margin: 1rem 0;
+}
+
+.site-section-separator {
+    position: relative;
+    border-bottom: 1px solid $color-divider;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 10%;
+        top: -4px;
+        left: 0px;
+        right: -4px;
+        bottom: -1px;
+        border-bottom: 6px solid $color-brand-accent;
+    }
+}

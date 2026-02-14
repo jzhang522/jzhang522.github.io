@@ -1,0 +1,165 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Imports
+# Variables
+# Mixins
+# Skill Ticker Animation
+# Skill Ticker
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# Imports
+--------------------------------------------------------------*/
+
+@use "base" as *;
+@use "sass:meta" as meta;
+@use "sass:color" as color;
+@use "skill" as skill;
+@use "sass:list" as list;
+
+/*--------------------------------------------------------------
+# Variables
+--------------------------------------------------------------*/
+
+$skill-lighten-hover: 12%;
+$skill-ticker-gap: 2rem;
+
+/*--------------------------------------------------------------
+# Mixins
+--------------------------------------------------------------*/
+
+%skill-ticker-base {
+    min-height: 4.5rem;
+    justify-content: center;
+}
+
+@mixin skill-ticker-variant($bg-color, $text-color: $color-text-inverse) {
+    background: $bg-color;
+    color: $text-color;
+    &:hover {
+        background: color.scale($bg-color, $lightness: $skill-lighten-hover);
+    }
+}
+
+/*--------------------------------------------------------------
+# Skill Ticker Animation
+--------------------------------------------------------------*/
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/*--------------------------------------------------------------
+# Skill Ticker
+--------------------------------------------------------------*/
+
+.skill-ticker-container {
+    margin-inline: 0;
+    width: 100%;
+    overflow: hidden;
+    background: $color-background-primary;
+    color: $color-text-inverse;
+    padding: 1rem 0;
+    top: $header-height;
+
+    &:hover {
+        .skill-tickers {
+            animation-play-state: paused;
+        }
+    }
+}
+
+.skill-tickers {
+    display: flex;
+    width: fit-content;
+    --ease: linear;
+    animation: scroll 60s linear infinite;
+    transition: --ease 0.5s ease;
+    gap: $skill-ticker-gap;
+}
+
+.tickers {
+    display: flex;
+    gap: $skill-ticker-gap;
+    flex-shrink: 0;
+}
+
+.ticker-container {
+    text-decoration: none;
+    font-size: $fs-sm;
+    font-weight: $fw-semibold;
+    min-width: 14rem;
+    min-height: 6rem;
+    background: $color-ticker-up;
+    color: $color-text-inverse;
+    padding: 10px;
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* top and bottom */
+    transition:
+        transform $transition,
+        box-shadow $transition,
+        background $transition;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        background: $color-ticker-up-hover;
+    }
+}
+
+.skill-ticker-section {
+    .ticker-container.skill-ticker {
+        @extend %skill-ticker-base;
+
+        @each $skill-id, $skill-value in skill.$skill-variants {
+            // Declare variables first
+            $bg: null;
+            $text: null;
+
+            // Set values inside the conditional
+            @if meta.type-of($skill-value) == "list" {
+                $bg: list.nth($skill-value, 1);
+                $text: list.nth($skill-value, 2);
+            } @else {
+                $bg: $skill-value;
+                $text: $color-text-inverse;
+            }
+
+            &[data-skill="#{$skill-id}"] {
+                @include skill-ticker-variant($bg, $text);
+            }
+        }
+    }
+
+    .skill-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        width: 100%;
+    }
+
+    .skill-name {
+        font-size: $fs-md;
+        font-weight: $fw-semibold;
+        line-height: 1.2;
+    }
+
+    .skill-category {
+        font-size: $fs-xs;
+        font-weight: $fw-normal;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+}
